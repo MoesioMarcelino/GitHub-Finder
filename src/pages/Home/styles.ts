@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 interface FormProps {
   hasError: boolean;
@@ -64,18 +64,26 @@ export const Error = styled.span`
   margin-top: 8px;
 `;
 
-export const Sections = styled.div`
+interface SectionProps {
+  width?: number;
+  hasContent?: boolean;
+}
+
+export const Sections = styled.div<SectionProps>`
   margin-top: 40px;
 
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-
-  width: 100%;
+  ${(props) =>
+    props.hasContent
+      ? css`
+          justify-content: center;
+          align-items: flex-start;
+        `
+      : css`
+          align-items: center;
+          justify-content: center;
+        `}
 `;
-interface SectionProps {
-  width: number;
-}
 
 export const Section = styled.div<SectionProps>`
   width: ${(props) => props.width}%;

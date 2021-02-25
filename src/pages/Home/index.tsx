@@ -143,7 +143,7 @@ const Home: React.FC = () => {
 
       {inputError && <Error>{inputError}</Error>}
 
-      <Sections>
+      <Sections hasContent={!!user.name}>
         {user.name ? (
           <>
             <Section width={40}>
@@ -185,7 +185,7 @@ const Home: React.FC = () => {
             </Section>
           </>
         ) : (
-          <Section width={100}>
+          <Section width={100} hasContent={!!user.name}>
             <WithoutContentImg src={withoutContentImg} />
           </Section>
         )}
