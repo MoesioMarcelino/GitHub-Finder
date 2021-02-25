@@ -66,11 +66,14 @@ export const Error = styled.span`
 
 interface SectionProps {
   width?: number;
+  minWidth?: number;
   hasContent?: boolean;
 }
 
 export const Sections = styled.div<SectionProps>`
   margin-top: 40px;
+
+  min-width: ${(props) => props.width}%;
 
   display: flex;
   ${(props) =>
@@ -86,6 +89,7 @@ export const Sections = styled.div<SectionProps>`
 `;
 
 export const Section = styled.div<SectionProps>`
+  min-width: ${(props) => props.minWidth}px;
   width: ${(props) => props.width}%;
 
   & + div {

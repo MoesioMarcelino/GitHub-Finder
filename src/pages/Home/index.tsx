@@ -1,13 +1,13 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from "react";
 
-import github from '../../services/api/github';
+import github from "../../services/api/github";
 
-import CardBio from '../../components/CardBio';
+import CardBio from "../../components/CardBio";
 
-import logoImg from '../../assets/logo.svg';
-import withoutContentImg from '../../assets/without-content.svg';
+import logoImg from "../../assets/logo.svg";
+import withoutContentImg from "../../assets/without-content.svg";
 
-import CardStar, { IStarProps } from '../../components/CardStar';
+import CardStar, { IStarProps } from "../../components/CardStar";
 
 import {
   Logo,
@@ -16,8 +16,8 @@ import {
   Sections,
   Section,
   WithoutContentImg,
-} from './styles';
-import { useToast } from '../../hooks/Toast';
+} from "./styles";
+import { useToast } from "../../hooks/Toast";
 
 interface IUser {
   name: string;
@@ -37,11 +37,11 @@ type IStar = IStarProps & { id: number };
 const Home: React.FC = () => {
   const { addToast } = useToast();
 
-  const [newUser, setNewUser] = useState('');
-  const [inputError, setInputError] = useState('');
+  const [newUser, setNewUser] = useState("");
+  const [inputError, setInputError] = useState("");
 
   const [user, setUser] = useState<IUser>(() => {
-    const storagedUser = localStorage.getItem('@GreenmileFinder:user');
+    const storagedUser = localStorage.getItem("@GreenmileFinder:user");
 
     if (storagedUser) {
       return JSON.parse(storagedUser);
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
     return {} as IUser;
   });
   const [stars, setStars] = useState<IStar[]>(() => {
-    const storagedStars = localStorage.getItem('@GreenmileFinder:user-stars');
+    const storagedStars = localStorage.getItem("@GreenmileFinder:user-stars");
 
     if (storagedStars) {
       return JSON.parse(storagedStars);
@@ -61,17 +61,17 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     addToast({
-      title: 'Olá, seja bem vindo(a)!',
-      type: 'info',
+      title: "Olá, seja bem vindo(a)!",
+      type: "info",
     });
   }, [addToast]);
 
   useEffect(() => {
-    localStorage.setItem('@GreenmileFinder:user', JSON.stringify(user));
+    localStorage.setItem("@GreenmileFinder:user", JSON.stringify(user));
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem('@GreenmileFinder:user-stars', JSON.stringify(stars));
+    localStorage.setItem("@GreenmileFinder:user-stars", JSON.stringify(stars));
   }, [stars]);
 
   async function handleFindUser(e: FormEvent<HTMLFormElement>): Promise<void> {
@@ -84,16 +84,18 @@ const Home: React.FC = () => {
 
     addToast({
       title: `Loading user...`,
-      type: 'info',
+      type: "info",
     });
 
     try {
-      const { data: user } = await github.get<Omit<IUser, 'user_stars'>>(
+      const { data: user } = await github.get<Omit<IUser, "user_stars">>(
         `/${newUser}`
       );
 
-      if (user.name) {
-        const { data: stars } = await github.get<IStar[]>(`${newUser}/starred`);
+      if (user.login) {
+        const { data: stars } = await github.get<IStar[]>(
+          `${user.login}/starred`
+        );
 
         if (stars) {
           setStars(stars);
@@ -102,31 +104,33 @@ const Home: React.FC = () => {
         setUser({
           ...user,
           user_stars: stars.length,
-          location: user.location || 'Brazil',
+          location: user.location || "Brazil",
         });
 
         addToast({
-          title: `User ${user.name} found successfully!`,
-          type: 'success',
+          title: `User ${user.login} found successfully!`,
+          type: "success",
         });
       } else {
         addToast({
           title: `User ${newUser} not found!`,
           description: `The specified user was not found, check the information sent`,
-          type: 'info',
+          type: "info",
         });
       }
 
-      setNewUser('');
-      setInputError('');
+      setNewUser("");
+      setInputError("");
     } catch (err) {
       addToast({
-        title: 'Error fetching user!',
+        title: "Error fetching user!",
         description: `There was an error fetching the user ${newUser}, try again!`,
-        type: 'error',
+        type: "error",
       });
     }
   }
+
+  console.log(user);
 
   return (
     <>
@@ -143,10 +147,10 @@ const Home: React.FC = () => {
 
       {inputError && <Error>{inputError}</Error>}
 
-      <Sections hasContent={!!user.name}>
-        {user.name ? (
+      <Sections hasContent={!!user.login} style={{ minWidth: "100%" }}>
+        {user.login ? (
           <>
-            <Section width={40}>
+            <Section width={100} minWidth={500}>
               <CardBio
                 image={user.avatar_url}
                 name={user.name}
@@ -161,9 +165,9 @@ const Home: React.FC = () => {
               ></CardBio>
             </Section>
 
-            <Section width={60}>
-              {stars[0]?.id &&
-                stars.map(
+            {stars[0]?.id && (
+              <Section width={100}>
+                {stars.map(
                   ({
                     id,
                     name,
@@ -182,7 +186,8 @@ const Home: React.FC = () => {
                     ></CardStar>
                   )
                 )}
-            </Section>
+              </Section>
+            )}
           </>
         ) : (
           <Section width={100} hasContent={!!user.name}>

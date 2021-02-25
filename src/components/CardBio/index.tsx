@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   FiArchive,
   FiUsers,
   FiPlusCircle,
   FiStar,
   FiArrowRight,
-} from 'react-icons/fi';
-import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
-import Leaflet from 'leaflet';
+} from "react-icons/fi";
+import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
+import Leaflet from "leaflet";
 
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 
-import notFoundImg from '../../assets/not-found.svg';
-import openStreetMap from '../../services/api/openStreetMap';
+import notFoundImg from "../../assets/not-found.svg";
+import openStreetMap from "../../services/api/openStreetMap";
 
-import markerIcon from '../../assets/marker.svg';
+import markerIcon from "../../assets/marker.svg";
 
 import {
   Container,
@@ -31,7 +31,7 @@ import {
   Status,
   SectionMapContainer,
   NotFoundImg,
-} from './styles';
+} from "./styles";
 
 interface IProps {
   image: any;
@@ -59,8 +59,8 @@ const mapIcon = Leaflet.icon({
 
 const CardBio: React.FC<IProps> = ({
   image,
-  name = '',
-  bio = '',
+  name = "-",
+  bio = "-",
   amount_repositories,
   amount_followers,
   amount_following,
@@ -71,7 +71,7 @@ const CardBio: React.FC<IProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [coordinates, setCoordinates] = useState<ICoordinates>(() => {
-    const storagedStars = localStorage.getItem('@GreenmileFinder:coordinates');
+    const storagedStars = localStorage.getItem("@GreenmileFinder:coordinates");
 
     if (storagedStars) {
       return JSON.parse(storagedStars);
@@ -85,9 +85,9 @@ const CardBio: React.FC<IProps> = ({
       setLoading(true);
       const { data: locationData } = await openStreetMap.get<
         { lat: string; lon: string }[]
-      >('', {
+      >("", {
         params: {
-          q: location || 'Brazil',
+          q: location || "Brazil",
         },
       });
 
@@ -100,7 +100,7 @@ const CardBio: React.FC<IProps> = ({
 
   useEffect(() => {
     localStorage.setItem(
-      '@GreenmileFinder:coordinates',
+      "@GreenmileFinder:coordinates",
       JSON.stringify(coordinates)
     );
   }, [coordinates]);
@@ -145,14 +145,14 @@ const CardBio: React.FC<IProps> = ({
         {coordinates.lat && !loading ? (
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
-            zoom={location === 'Brasil' ? 2 : 7}
-            minZoom={location === 'Brasil' ? 2 : 5}
-            style={{ height: '600px', width: '100%' }}
+            zoom={location === "Brasil" ? 2 : 7}
+            minZoom={location === "Brasil" ? 2 : 5}
+            style={{ height: "600px", width: "100%" }}
           >
-            {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
-            <TileLayer
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {/* <TileLayer
               url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-            />
+            /> */}
             <Marker
               icon={mapIcon}
               position={[coordinates.lat, coordinates.lng]}

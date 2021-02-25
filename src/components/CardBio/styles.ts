@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   background: #ffffff;
@@ -33,6 +33,7 @@ export const UserImage = styled.img`
 
 export const UserInfoContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
 `;
 

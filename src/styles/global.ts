@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -18,6 +18,8 @@ export default createGlobalStyle`
   }
 
   #root {
+    max-width: 1360px;
+    margin: 0 auto;
     padding: 40px;
     display: flex;
     flex-direction: column;
