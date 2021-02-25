@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-import githubBackground from '../assets/background.png';
-
 export default createGlobalStyle`
   * {
     margin: 0;
@@ -11,18 +9,20 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #f0f0f5 url(${githubBackground}) no-repeat 140% top;
+    background-color: #f0f0f5;
     -webkit-font-smoothing: antialiased;
   }
 
   body, -moz-user-input, button {
-    font: 16px Roboto, sans-serif;
+    font: 16px 'Rubik', sans-serif;
   }
 
   #root {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   button {

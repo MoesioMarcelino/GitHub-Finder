@@ -1,88 +1,141 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { FiChevronRight } from 'react-icons/fi';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
-import 'leaflet/dist/leaflet.css';
+import github from '../../services/api/github';
 
-import api from '../../services/api';
+import CardBio from '../../components/CardBio';
 
 import logoImg from '../../assets/logo.svg';
+import withoutContentImg from '../../assets/without-content.svg';
+
+import CardStar, { IStarProps } from '../../components/CardStar';
 
 import {
-  HeaderContainer,
-  Title,
   Logo,
   Form,
-  Repositories,
   Error,
+  Sections,
+  Section,
+  WithoutContentImg,
 } from './styles';
+import { useToast } from '../../hooks/Toast';
 
-interface Repository {
-  full_name: string;
-  description: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
+interface IUser {
+  name: string;
+  avatar_url: string;
+  bio: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  user_stars: number;
+  location: string;
+  html_url: string;
+  login: string;
 }
 
-const Home: React.FC = () => {
-  const [newRepo, setNewRepo] = useState('');
-  const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
-    const storagedRepositories = localStorage.getItem(
-      '@GithubExplorer:repositories'
-    );
+type IStar = IStarProps & { id: number };
 
-    if (storagedRepositories) {
-      return JSON.parse(storagedRepositories);
+const Home: React.FC = () => {
+  const { addToast } = useToast();
+
+  const [newUser, setNewUser] = useState('');
+  const [inputError, setInputError] = useState('');
+
+  const [user, setUser] = useState<IUser>(() => {
+    const storagedUser = localStorage.getItem('@GreenmileFinder:user');
+
+    if (storagedUser) {
+      return JSON.parse(storagedUser);
     }
-    return [];
+
+    return {} as IUser;
+  });
+  const [stars, setStars] = useState<IStar[]>(() => {
+    const storagedStars = localStorage.getItem('@GreenmileFinder:user-stars');
+
+    if (storagedStars) {
+      return JSON.parse(storagedStars);
+    }
+
+    return [] as IStarProps[];
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      '@GithubExplorer:repositories',
-      JSON.stringify(repositories)
-    );
-  }, [repositories]);
+    addToast({
+      title: 'Olá, seja bem vindo(a)!',
+      type: 'info',
+    });
+  }, [addToast]);
 
-  async function handleAddRepository(
-    e: FormEvent<HTMLFormElement>
-  ): Promise<void> {
+  useEffect(() => {
+    localStorage.setItem('@GreenmileFinder:user', JSON.stringify(user));
+  }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem('@GreenmileFinder:user-stars', JSON.stringify(stars));
+  }, [stars]);
+
+  async function handleFindUser(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    if (!newRepo) {
-      setInputError('Digite o autor/nome do repositório');
+    if (!newUser) {
+      setInputError("User's nickname is required");
       return;
     }
 
+    addToast({
+      title: `Loading user...`,
+      type: 'info',
+    });
+
     try {
-      const response = await api.get<Repository>(`repos/${newRepo}`);
+      const { data: user } = await github.get<Omit<IUser, 'user_stars'>>(
+        `/${newUser}`
+      );
 
-      const repository = response.data;
+      if (user.name) {
+        const { data: stars } = await github.get<IStar[]>(`${newUser}/starred`);
 
-      setRepositories([...repositories, repository]);
+        if (stars) {
+          setStars(stars);
+        }
 
-      setNewRepo('');
+        setUser({
+          ...user,
+          user_stars: stars.length,
+          location: user.location || 'Brazil',
+        });
+
+        addToast({
+          title: `User ${user.name} found successfully!`,
+          type: 'success',
+        });
+      } else {
+        addToast({
+          title: `User ${newUser} not found!`,
+          description: `The specified user was not found, check the information sent`,
+          type: 'info',
+        });
+      }
+
+      setNewUser('');
       setInputError('');
     } catch (err) {
-      setInputError('Erro na busca pelo repositório');
+      addToast({
+        title: 'Error fetching user!',
+        description: `There was an error fetching the user ${newUser}, try again!`,
+        type: 'error',
+      });
     }
   }
 
   return (
     <>
-      <HeaderContainer>
-        <Title>Greenmile Finder</Title>
-        <Logo src={logoImg} alt="Logo" />
-      </HeaderContainer>
+      <Logo src={logoImg} alt="Logo" />
 
-      <Form hasError={!!inputError} onSubmit={handleAddRepository}>
+      <Form hasError={!!inputError} onSubmit={handleFindUser}>
         <input
-          value={newRepo}
-          onChange={(e) => setNewRepo(e.target.value)}
+          value={newUser}
+          onChange={(e) => setNewUser(e.target.value)}
           placeholder="Type user nickname here"
         />
         <button type="submit">Search</button>
@@ -90,38 +143,53 @@ const Home: React.FC = () => {
 
       {inputError && <Error>{inputError}</Error>}
 
-      <Repositories>
-        {repositories.map((repository) => (
-          <Link
-            key={repository.full_name}
-            to={`/repository/${repository.full_name}`}
-          >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
+      <Sections>
+        {user.name ? (
+          <>
+            <Section width={40}>
+              <CardBio
+                image={user.avatar_url}
+                name={user.name}
+                bio={user.bio}
+                amount_repositories={user.public_repos}
+                amount_followers={user.followers}
+                amount_following={user.following}
+                amount_stars={user.user_stars}
+                location={user.location}
+                html_url={user.html_url}
+                login={user.login}
+              ></CardBio>
+            </Section>
 
-            <FiChevronRight size={20} />
-          </Link>
-        ))}
-      </Repositories>
-
-      <MapContainer
-        center={[-7.2303004, -39.310245]}
-        zoom={15}
-        style={{ height: '500px' }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
+            <Section width={60}>
+              {stars[0]?.id &&
+                stars.map(
+                  ({
+                    id,
+                    name,
+                    avatar_url,
+                    description,
+                    forks_count,
+                    stargazers_count,
+                  }) => (
+                    <CardStar
+                      key={id}
+                      name={name}
+                      avatar_url={avatar_url}
+                      description={description}
+                      forks_count={forks_count}
+                      stargazers_count={stargazers_count}
+                    ></CardStar>
+                  )
+                )}
+            </Section>
+          </>
+        ) : (
+          <Section width={100}>
+            <WithoutContentImg src={withoutContentImg} />
+          </Section>
+        )}
+      </Sections>
     </>
   );
 };

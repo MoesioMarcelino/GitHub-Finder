@@ -4,10 +4,6 @@ interface FormProps {
   hasError: boolean;
 }
 
-export const HeaderContainer = styled.div`
-  display: flex;
-`;
-
 export const Title = styled.h1`
   font-size: 48px;
   color: #3a3a3a;
@@ -16,15 +12,15 @@ export const Title = styled.h1`
   line-height: 56px;
 `;
 
-export const Logo = styled.img`
-  width: 70px;
-`;
+export const Logo = styled.img``;
 
 export const Form = styled.form<FormProps>`
   margin-top: 40px;
   max-width: 700px;
   display: flex;
+
   input {
+    min-width: 500px;
     flex: 1;
     height: 70px;
     padding: 0 24px;
@@ -34,15 +30,18 @@ export const Form = styled.form<FormProps>`
     font-size: 16px;
     border: 2px solid #fff;
     border-right: 0;
+
     ${(props) =>
       props.hasError &&
       css`
         border-color: #c53030;
       `}
+
     &::placeholder {
       color: #a8a8b3;
     }
   }
+
   button {
     width: 210px;
     height: 70px;
@@ -65,46 +64,33 @@ export const Error = styled.span`
   margin-top: 8px;
 `;
 
-export const Repositories = styled.div`
-  margin-top: 80px;
-  max-width: 700px;
-  a {
-    background: #fff;
-    border-radius: 5px;
-    width: 100%;
-    padding: 24px;
-    display: block;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: transform 0.4s;
-    & + a {
-      margin-top: 16px;
-    }
-    &:hover {
-      transform: translateX(10px);
-    }
-    img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-    }
-    div {
-      margin-left: 16px;
-      flex: 1;
-      strong {
-        font-size: 20px;
-        color: #3d3d4d;
-      }
-      p {
-        font-size: 18px;
-        color: #a8a8b3;
-        margin-top: 4px;
-      }
-    }
-    svg {
-      margin-left: auto;
-      color: #cbcbd6;
-    }
+export const Sections = styled.div`
+  margin-top: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+`;
+interface SectionProps {
+  width: number;
+}
+
+export const Section = styled.div<SectionProps>`
+  width: ${(props) => props.width}%;
+
+  & + div {
+    margin-left: 20px;
   }
+`;
+
+export const WithoutContentImg = styled.img`
+  margin-top: 50px;
+  width: 500px;
+`;
+
+export const StarsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
