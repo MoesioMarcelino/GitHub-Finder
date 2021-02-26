@@ -11,7 +11,14 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
     "axios": "^0.21.1",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4",
     "leaflet": "^1.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -29,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:coverage": "yarn test --coverage --watchAll false"
   },
   "eslintConfig": {
     "extends": [

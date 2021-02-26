@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   const [inputError, setInputError] = useState("");
 
   const [user, setUser] = useState<IUser>(() => {
-    const storagedUser = localStorage.getItem("@GreenmileFinder:user");
+    const storagedUser = localStorage.getItem("@GitHubFinder:user");
 
     if (storagedUser) {
       return JSON.parse(storagedUser);
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
     return {} as IUser;
   });
   const [stars, setStars] = useState<IStar[]>(() => {
-    const storagedStars = localStorage.getItem("@GreenmileFinder:user-stars");
+    const storagedStars = localStorage.getItem("@GitHubFinder:user-stars");
 
     if (storagedStars) {
       return JSON.parse(storagedStars);
@@ -67,18 +67,22 @@ const Home: React.FC = () => {
   }, [addToast]);
 
   useEffect(() => {
-    localStorage.setItem("@GreenmileFinder:user", JSON.stringify(user));
+    localStorage.setItem("@GitHubFinder:user", JSON.stringify(user));
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem("@GreenmileFinder:user-stars", JSON.stringify(stars));
+    localStorage.setItem("@GitHubFinder:user-stars", JSON.stringify(stars));
   }, [stars]);
 
   async function handleFindUser(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
     if (!newUser) {
-      setInputError("User's nickname is required");
+      // setInputError("User's nickname is required");
+      addToast({
+        title: `This field is required`,
+        type: "error",
+      });
       return;
     }
 
