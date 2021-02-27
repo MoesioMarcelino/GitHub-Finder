@@ -26,29 +26,27 @@ const CardStar: React.FC<IStarProps> = ({
   description,
   forks_count,
   stargazers_count,
-}) => {
-  return (
-    <Container>
-      <ContentContainer>
-        <Name>{name}</Name>
-        <Description>{description}</Description>
-        <StatusContainer>
-          <Status>
-            <FiGitBranch size={16} />
-            {forks_count}
-          </Status>
-          <Status>
-            <FiStar size={16} />
-            {stargazers_count}
-          </Status>
-        </StatusContainer>
-      </ContentContainer>
-      <LikeContainer>
-        <Counter>10</Counter>
-        <FiThumbsUp size={16} />
-      </LikeContainer>
-    </Container>
-  );
-};
+}) => (
+  <Container>
+    <ContentContainer>
+      <Name>{name}</Name>
+      <Description>{description}</Description>
+      <StatusContainer>
+        <Status>
+          <FiGitBranch size={16} />
+          {forks_count}
+        </Status>
+        <Status>
+          <FiStar size={16} />
+          {stargazers_count}
+        </Status>
+      </StatusContainer>
+    </ContentContainer>
+    <LikeContainer>
+      <Counter>10</Counter>
+      <FiThumbsUp size={16} />
+    </LikeContainer>
+  </Container>
+);
 
 export default CardStar;

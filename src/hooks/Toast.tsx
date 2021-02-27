@@ -30,7 +30,7 @@ export const ToastProvider: React.FC = ({ children }) => {
 
       setToasts((state) => [...state, toast]);
     },
-    []
+    [],
   );
 
   const removeToast = useCallback((id: string) => {

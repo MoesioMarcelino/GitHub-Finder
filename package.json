@@ -62,5 +62,13 @@
     "@types/react-leaflet": "^2.5.2",
     "@types/styled-components": "^5.1.7",
     "@types/uuid": "^8.3.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/**/*.tsx",
+      "!src/hooks/index.tsx"
+    ]
   }
 }

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from 'react';
 
-import github from "../../services/api/github";
+import github from '../../services/api/github';
 
-import CardBio from "../../components/CardBio";
+import CardBio from '../../components/CardBio';
 
-import logoImg from "../../assets/logo.svg";
-import withoutContentImg from "../../assets/without-content.svg";
+import logoImg from '../../assets/logo.svg';
+import withoutContentImg from '../../assets/without-content.svg';
 
-import CardStar, { IStarProps } from "../../components/CardStar";
+import CardStar, { IStarProps } from '../../components/CardStar';
 
 import {
   Logo,
@@ -16,8 +16,8 @@ import {
   Sections,
   Section,
   WithoutContentImg,
-} from "./styles";
-import { useToast } from "../../hooks/Toast";
+} from './styles';
+import { useToast } from '../../hooks/Toast';
 
 interface IUser {
   name: string;
@@ -37,11 +37,11 @@ type IStar = IStarProps & { id: number };
 const Home: React.FC = () => {
   const { addToast } = useToast();
 
-  const [newUser, setNewUser] = useState("");
-  const [inputError, setInputError] = useState("");
+  const [newUser, setNewUser] = useState('');
+  const [inputError, setInputError] = useState('');
 
   const [user, setUser] = useState<IUser>(() => {
-    const storagedUser = localStorage.getItem("@GitHubFinder:user");
+    const storagedUser = localStorage.getItem('@GitHubFinder:user');
 
     if (storagedUser) {
       return JSON.parse(storagedUser);
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
     return {} as IUser;
   });
   const [stars, setStars] = useState<IStar[]>(() => {
-    const storagedStars = localStorage.getItem("@GitHubFinder:user-stars");
+    const storagedStars = localStorage.getItem('@GitHubFinder:user-stars');
 
     if (storagedStars) {
       return JSON.parse(storagedStars);
@@ -61,17 +61,17 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     addToast({
-      title: "Olá, seja bem vindo(a)!",
-      type: "info",
+      title: 'Olá, seja bem vindo(a)!',
+      type: 'info',
     });
   }, [addToast]);
 
   useEffect(() => {
-    localStorage.setItem("@GitHubFinder:user", JSON.stringify(user));
+    localStorage.setItem('@GitHubFinder:user', JSON.stringify(user));
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem("@GitHubFinder:user-stars", JSON.stringify(stars));
+    localStorage.setItem('@GitHubFinder:user-stars', JSON.stringify(stars));
   }, [stars]);
 
   async function handleFindUser(e: FormEvent<HTMLFormElement>): Promise<void> {
@@ -80,61 +80,60 @@ const Home: React.FC = () => {
     if (!newUser) {
       // setInputError("User's nickname is required");
       addToast({
-        title: `This field is required`,
-        type: "error",
+        title: 'This field is required',
+        type: 'error',
       });
       return;
     }
 
     addToast({
-      title: `Loading user...`,
-      type: "info",
+      title: 'Loading user...',
+      type: 'info',
     });
 
     try {
-      const { data: user } = await github.get<Omit<IUser, "user_stars">>(
-        `/${newUser}`
-      );
+      const { data: userReturned } = await github.get<
+        Omit<IUser, 'user_stars'>
+      >(`/${newUser}`);
 
-      if (user.login) {
-        const { data: stars } = await github.get<IStar[]>(
-          `${user.login}/starred`
+      if (userReturned.login) {
+        const { data: starsReturned } = await github.get<IStar[]>(
+          `${userReturned.login}/starred`,
         );
 
-        if (stars) {
-          setStars(stars);
+        if (starsReturned) {
+          setStars(starsReturned);
         }
 
         setUser({
-          ...user,
-          user_stars: stars.length,
-          location: user.location || "Brazil",
+          ...userReturned,
+          user_stars: starsReturned.length,
+          location: userReturned.location || 'Brazil',
         });
 
         addToast({
-          title: `User ${user.login} found successfully!`,
-          type: "success",
+          title: `User ${userReturned.login} found successfully!`,
+          type: 'success',
         });
       } else {
         addToast({
           title: `User ${newUser} not found!`,
-          description: `The specified user was not found, check the information sent`,
-          type: "info",
+          description:
+            'The specified user was not found, check the information sent',
+          type: 'info',
         });
       }
 
-      setNewUser("");
-      setInputError("");
+      setNewUser('');
+      setInputError('');
     } catch (err) {
       addToast({
-        title: "Error fetching user!",
+        title: 'Error fetching user!',
         description: `There was an error fetching the user ${newUser}, try again!`,
-        type: "error",
+        type: 'error',
       });
     }
   }
-
-  console.log(user);
 
   return (
     <>
@@ -151,7 +150,7 @@ const Home: React.FC = () => {
 
       {inputError && <Error>{inputError}</Error>}
 
-      <Sections hasContent={!!user.login} style={{ minWidth: "100%" }}>
+      <Sections hasContent={!!user.login} style={{ minWidth: '100%' }}>
         {user.login ? (
           <>
             <Section width={100} minWidth={500}>
@@ -166,7 +165,7 @@ const Home: React.FC = () => {
                 location={user.location}
                 html_url={user.html_url}
                 login={user.login}
-              ></CardBio>
+              />
             </Section>
 
             {stars[0]?.id && (
@@ -187,8 +186,8 @@ const Home: React.FC = () => {
                       description={description}
                       forks_count={forks_count}
                       stargazers_count={stargazers_count}
-                    ></CardStar>
-                  )
+                    />
+                  ),
                 )}
               </Section>
             )}
