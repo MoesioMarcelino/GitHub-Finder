@@ -73,7 +73,7 @@ export const LikeContainer = styled.div<LikeProps>`
   transition: background 0.4s;
 
   svg {
-    margin-left: ${(props) => (props.like ? '10px' : 0)};
+    margin-left: 10px;
   }
 
   &:hover {

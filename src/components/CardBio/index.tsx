@@ -61,17 +61,17 @@ const CardBio: React.FC<IProps> = ({
   image,
   name = '-',
   bio = '-',
-  amount_repositories,
-  amount_followers,
-  amount_following,
-  amount_stars,
+  amount_repositories = 0,
+  amount_followers = 0,
+  amount_following = 0,
+  amount_stars = 0,
   location,
   html_url,
   login,
 }) => {
   const [loading, setLoading] = useState(false);
   const [coordinates, setCoordinates] = useState<ICoordinates>(() => {
-    const storagedStars = localStorage.getItem('@GreenmileFinder:coordinates');
+    const storagedStars = localStorage.getItem('@GitHubFinder:coordinates');
 
     if (storagedStars) {
       return JSON.parse(storagedStars);
@@ -92,15 +92,15 @@ const CardBio: React.FC<IProps> = ({
       });
 
       setCoordinates({ lat: +locationData[0].lat, lng: +locationData[0].lon });
-      setLoading(false);
     }
 
     getCoordinates();
+    setLoading(false);
   }, [location]);
 
   useEffect(() => {
     localStorage.setItem(
-      '@GreenmileFinder:coordinates',
+      '@GitHubFinder:coordinates',
       JSON.stringify(coordinates),
     );
   }, [coordinates]);
@@ -112,7 +112,7 @@ const CardBio: React.FC<IProps> = ({
         <UserInfoContainer>
           <UserInfoHeaderContainer>
             <UserInfo>
-              <Username>{name}</Username>
+              <Username data-testid="username">{name}</Username>
               <Nickname>@{login}</Nickname>
             </UserInfo>
             <LinkContainer href={html_url} target="_blank">
@@ -149,10 +149,10 @@ const CardBio: React.FC<IProps> = ({
             minZoom={location === 'Brasil' ? 2 : 5}
             style={{ height: '600px', width: '100%' }}
           >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {/* <TileLayer
+            {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
+            <TileLayer
               url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-            /> */}
+            />
             <Marker
               icon={mapIcon}
               position={[coordinates.lat, coordinates.lng]}

@@ -1,42 +1,84 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import MockAdapter from 'axios-mock-adapter';
+
+import gitHubAPI from '../../services/api/github';
+
 import Home from '../../pages/Home';
-import { useToast } from '../../hooks/Toast';
 
-const toastMock = () => ({
+const mockedAddToast = jest.fn();
+const apiGitHubMock = new MockAdapter(gitHubAPI);
+
+jest.mock('../../hooks/Toast', () => ({
   useToast: () => ({
-    addToast: jest.fn,
+    addToast: mockedAddToast,
   }),
-});
+}));
 
-jest.mock('../../hooks/Toast.tsx', () => toastMock);
+describe('Home Page', () => {
+  it('should be able to search for an existing user', async () => {
+    const { getByPlaceholderText, getByText } = render(<Home />);
 
-// const localStorageMock = () => ({
-//   getItem: jest.fn(),
-//   setItem: jest.fn(),
-//   clear: jest.fn(),
-// });
+    const inputNickname = getByPlaceholderText('Type user nickname here');
+    const buttonSearch = getByText('Search');
 
-// Object.defineProperty(window, "localStorage", {
-//   value: localStorageMock,
-// });
+    const nickname = 'moesiomarcelino';
 
-describe('Home', () => {
-  // it("should be able to get user informations on localStorage", () => {
-  //   localStorage.setItem(
-  //     "@GitHubFinder:user",
-  //     JSON.stringify({ name: "test-localStorage" })
-  //   );
+    fireEvent.change(inputNickname, { target: { value: nickname } });
+    fireEvent.click(buttonSearch);
 
-  //   expect(localStorage.setItem).toBeCalledWith("@GitHubFinder:user");
-  // });
+    apiGitHubMock.onGet(`/${nickname}`).reply(200, {
+      login: 'moesiomarcelino',
+    });
 
-  it('should not be able to search for user not defined', () => {
-    // const { getByText } = render(<Home />);
-    // const submitButton = getByText("Search");
-    // fireEvent.click(submitButton);
-    // // expect(toastMock).toHaveBeenCalledWith(
-    // //   expect.objectContaining({ type: "error" })
-    // expect(toastMock().useToast().addToast()).toHaveBeenCalled();
+    const { data: userReturned } = await gitHubAPI.get(`/${nickname}`);
+
+    apiGitHubMock.onGet(`/${nickname}/starred`).reply(200, {});
+
+    const { data: starsReturned } = await gitHubAPI.get(`/${nickname}/starred`);
+
+    await waitFor(() => {
+      expect(mockedAddToast).toHaveBeenCalled();
+    });
+  });
+
+  it('should not be able to search without one nickname defined on input', async () => {
+    const { getByText } = render(<Home />);
+
+    const buttonSearch = getByText('Search');
+    fireEvent.click(buttonSearch);
+
+    await waitFor(() => {
+      expect(mockedAddToast).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'error' }),
+      );
+    });
+  });
+
+  it('should displayed a message from user not found', async () => {
+    const { getByPlaceholderText, getByText } = render(<Home />);
+
+    const inputNickname = getByPlaceholderText('Type user nickname here');
+    const buttonSearch = getByText('Search');
+
+    const nickname = 'user-test-not-found';
+
+    fireEvent.change(inputNickname, {
+      target: { value: nickname },
+    });
+    fireEvent.click(buttonSearch);
+
+    apiGitHubMock.onGet(`/${nickname}`).reply(404);
+
+    // Test toast info
+    await waitFor(() => {
+      expect(mockedAddToast).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'info' }),
+      );
+    });
+
+    act(() => {
+      gitHubAPI.get(`/${nickname}`);
+    });
   });
 });

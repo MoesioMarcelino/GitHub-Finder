@@ -41,7 +41,11 @@ const Toast: React.FC<ToastData> = ({ toast, style }) => {
         <span>{title}</span>
         <p>{description}</p>
       </div>
-      <button onClick={() => removeToast(id)} type="button">
+      <button
+        onClick={() => removeToast(id)}
+        type="button"
+        data-testid="button-remove-toast"
+      >
         <FiXCircle size={20} />
       </button>
     </Container>

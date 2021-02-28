@@ -17,8 +17,6 @@ interface StarContextData {
 const StarContext = createContext<StarContextData>({} as StarContextData);
 
 export const StarProvider: React.FC = ({ children }) => {
-  const [stars, setStars] = useState<StartProps[]>([]);
-
   const giveStar = useCallback(({ id, user, like }: StartProps) => {
     const starStoraged = localStorage.getItem('@GitHubFinder:stars-liked');
 
@@ -80,11 +78,5 @@ export const StarProvider: React.FC = ({ children }) => {
 };
 
 export function useStar(): StarContextData {
-  const context = useContext(StarContext);
-
-  if (!context) {
-    throw new Error('useStar should be used within a StarProvider');
-  }
-
-  return context;
+  return useContext(StarContext);
 }

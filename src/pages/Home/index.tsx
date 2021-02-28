@@ -61,7 +61,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     addToast({
-      title: 'Olá, seja bem vindo(a)!',
+      title: 'Hello, welcome!',
       type: 'info',
     });
   }, [addToast]);
@@ -85,6 +85,9 @@ const Home: React.FC = () => {
       });
       return;
     }
+
+    setNewUser('');
+    setInputError('');
 
     addToast({
       title: 'Loading user...',
@@ -123,9 +126,6 @@ const Home: React.FC = () => {
           type: 'info',
         });
       }
-
-      setNewUser('');
-      setInputError('');
     } catch (err) {
       addToast({
         title: 'Error fetching user!',

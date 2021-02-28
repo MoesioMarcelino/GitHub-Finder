@@ -34,9 +34,7 @@ const CardStar: React.FC<IStarProps> = ({
 }) => {
   const { giveStar, removeStar } = useStar();
 
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
+  const [counter, setCounter] = useState(() => {
     const stars = localStorage.getItem('@GitHubFinder:stars-liked');
 
     if (stars) {
@@ -47,11 +45,14 @@ const CardStar: React.FC<IStarProps> = ({
           idStoraged === id && userStoraged === user,
       );
 
-      setCounter(starFinded?.like ? 1 : 0);
-    } else {
-      setCounter(0);
+      if (starFinded?.id === id) {
+        return 1;
+      }
     }
+    return 0;
   });
+
+  useEffect(() => {});
 
   function handleLikeStar() {
     if (counter === 1) {
@@ -79,8 +80,12 @@ const CardStar: React.FC<IStarProps> = ({
           </Status>
         </StatusContainer>
       </ContentContainer>
-      <LikeContainer like={!!counter} onClick={handleLikeStar}>
-        {counter !== 0 && <Counter>{counter}</Counter>}
+      <LikeContainer
+        like={!!counter}
+        onClick={handleLikeStar}
+        data-testid="like-container"
+      >
+        <Counter data-testid="counter-like">{counter}</Counter>
         <FiThumbsUp size={16} />
       </LikeContainer>
     </Container>
