@@ -5,6 +5,7 @@ export const Container = styled.div`
   border-radius: 10px;
   background-color: #fff;
 
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,15 +50,21 @@ export const Status = styled.div`
   }
 `;
 
-export const LikeContainer = styled.div`
+interface LikeProps {
+  like: boolean;
+}
+
+export const LikeContainer = styled.div<LikeProps>`
+
+
   min-width: 80px;
   min-height: 80px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: #04d361;
+  background-color: ${(props) => (props.like ? '#04d361' : '#fff')};
+  border: ${(props) => (props.like ? 'none' : '3px solid #04d361')};
   border-radius: 10px;
   cursor: pointer;
 
@@ -66,11 +73,11 @@ export const LikeContainer = styled.div`
   transition: background 0.4s;
 
   svg {
-    margin-left: 10px;
+    margin-left: ${(props) => (props.like ? '10px' : 0)};
   }
 
   &:hover {
-    background: #05a54d;
+    background: ${(props) => (props.like ? '#05a54d' : '#04d361')} ;
   }
 `;
 

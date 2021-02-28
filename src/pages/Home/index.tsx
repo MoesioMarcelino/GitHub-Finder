@@ -78,7 +78,7 @@ const Home: React.FC = () => {
     e.preventDefault();
 
     if (!newUser) {
-      // setInputError("User's nickname is required");
+      setInputError('Field required *');
       addToast({
         title: 'This field is required',
         type: 'error',
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
       <Sections hasContent={!!user.login} style={{ minWidth: '100%' }}>
         {user.login ? (
           <>
-            <Section width={100} minWidth={500}>
+            <Section width={100} minWidth={500} hasContent={!!user.login}>
               <CardBio
                 image={user.avatar_url}
                 name={user.name}
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
             </Section>
 
             {stars[0]?.id && (
-              <Section width={100}>
+              <Section width={100} hasContent={!!user.login}>
                 {stars.map(
                   ({
                     id,
@@ -181,6 +181,8 @@ const Home: React.FC = () => {
                   }) => (
                     <CardStar
                       key={id}
+                      id={id}
+                      user={user.login}
                       name={name}
                       avatar_url={avatar_url}
                       description={description}

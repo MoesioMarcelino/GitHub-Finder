@@ -31,7 +31,8 @@ export const Form = styled.form<FormProps>`
     border: 2px solid #fff;
     border-right: 0;
 
-    ${(props) => props.hasError
+    ${(props) =>
+    props.hasError
       && css`
         border-color: #c53030;
       `}
@@ -75,18 +76,23 @@ export const Sections = styled.div<SectionProps>`
   min-width: ${(props) => props.width}%;
 
   display: flex;
-  ${(props) => (props.hasContent
-    ? css`
+  ${(props) =>
+    (props.hasContent
+      ? css`
           justify-content: center;
           align-items: flex-start;
         `
-    : css`
+      : css`
           align-items: center;
           justify-content: center;
         `)}
 `;
 
 export const Section = styled.div<SectionProps>`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: ${(props) => (props.hasContent ? 'baseline' : 'center')};
   min-width: ${(props) => props.minWidth}px;
   width: ${(props) => props.width}%;
 
