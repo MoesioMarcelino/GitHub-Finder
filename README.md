@@ -20,9 +20,12 @@
 <div style="margin-right: 10px">
 
 [![Gmail Badge](https://img.shields.io/badge/-moesiomarcelino1@gmail.com-6633cc?style=flat-square&logo=Gmail&logoColor=white&link=mailto:moesiomarcelino@gmail.com)](mailto:moesiomarcelino1@gmail.com)
+
 </div>
+<div>
 
 [![Whatsapp Badge](https://img.shields.io/badge/-Whatsapp-6633cc?logo=whatsapp&logoColor=white&link=https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)](https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)
+</div>
 </div>
 
 ## Cloning repository
