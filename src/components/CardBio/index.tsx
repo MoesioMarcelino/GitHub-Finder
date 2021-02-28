@@ -65,7 +65,7 @@ const CardBio: React.FC<IProps> = ({
   amount_followers = 0,
   amount_following = 0,
   amount_stars = 0,
-  location,
+  location = 'Brazil',
   html_url,
   login,
 }) => {
@@ -87,7 +87,7 @@ const CardBio: React.FC<IProps> = ({
         { lat: string; lon: string }[]
       >('', {
         params: {
-          q: location || 'Brazil',
+          q: location,
         },
       });
 
@@ -145,8 +145,7 @@ const CardBio: React.FC<IProps> = ({
         {coordinates.lat && !loading ? (
           <MapContainer
             center={[coordinates.lat, coordinates.lng]}
-            zoom={location === 'Brasil' ? 2 : 7}
-            minZoom={location === 'Brasil' ? 2 : 5}
+            zoom={4}
             style={{ height: '600px', width: '100%' }}
           >
             {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}

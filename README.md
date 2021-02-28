@@ -1,46 +1,93 @@
-# Getting Started with Create React App
+<p align="center">
+<img src="./src/assets/logo.svg" />
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
 
-## Available Scripts
+<img src="https://user-images.githubusercontent.com/37598129/109435927-b5df6200-79fb-11eb-8a59-29c968ee4ca9.gif" width="100%" />
 
-In the project directory, you can run:
+<br />
 
-### `yarn start`
+<p align="center">GitHub Finder is an application to find users from GitHub. This application displays user informations, your location in map and repositories that user starred</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<div style="display: flex; align-items: center; justify-content: center; width: 100%;">
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<div style="margin-right: 10px">
 
-### `yarn test`
+[![Linkedin Badge](https://img.shields.io/badge/-MoesioMarcelino-6633cc?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/moesiomarcelino/)](https://www.linkedin.com/in/moesiomarcelino/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+</div>
+<div style="margin-right: 10px">
 
-### `yarn build`
+[![Gmail Badge](https://img.shields.io/badge/-moesiomarcelino1@gmail.com-6633cc?style=flat-square&logo=Gmail&logoColor=white&link=mailto:moesiomarcelino@gmail.com)](mailto:moesiomarcelino1@gmail.com)
+</div>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[![Whatsapp Badge](https://img.shields.io/badge/-Whatsapp-6633cc?logo=whatsapp&logoColor=white&link=https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)](https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)
+</div>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Cloning repository
+- [x] You need have a [github](https://github.com/git-guides/install-git) installed in you computer.
+- [x] After it, clone this repository
+  ```js
+    git clone https://github.com/MoesioMarcelino/GitHub-Finder
+  ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Configuring enviroment
+### Running app with Mapbox layer
+- [x] You need a key from [mapbox](https://google.com)
+- [x] After you get the key and cloning the repository, you should go to in the root folder this project and create the file **.env** with the enviroment variable:
+    ```js
+      REACT_APP_MAPBOX_TOKEN=YOUR_TOKEN_HERE
+    ```
+- [x] You will find an **.env.example** file as a template for the file to be created
+- [x] Ensure that the application is restarted, if you have already started
 
-### `yarn eject`
+### Running app with layer default from leaflet
+- [x] If you do not want to perform the step-by-step above, navigate to the file: 
+  ```js
+  /src/components/CardBio/index.tsx
+  ```
+- [x] Uncomment the contents of line 151 and comment the contents of line 152 to line 154. The file will look like this:
+  ```js
+  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+  {/* <TileLayer
+    url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+  /> */}
+  ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Installing dependencies
+- [x] You will need a node installed your computuder
+- [x] You will need a package management ([npm](https://www.npmjs.com/get-npm) or [yarn](https://classic.yarnpkg.com/en/docs/install))
+- [x] Run:
+```js
+  yarn 
+  // or npm install
+``` 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Running project
+```js
+  yarn start
+  // or npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Running Tests Coverage
+- [x] Run:
+```js
+  yarn test:coverage
+  // or npm test:coverage
+```
+- [x] In the root folder, a **coverage** folder will be generated.
+- [x] Navigate to the folder
+- [x] Enter the **lcov-report** folder and run the **index.html** file.
+- [x] A screen like this will appear:
+  <img src="https://user-images.githubusercontent.com/37598129/109436711-94807500-79ff-11eb-83cd-5f904fde0f99.png" width="100%" />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contributing / Sugestions
+All sugestions and contributions are welcome! In this case, contact me through the links below
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Networking
+- [Portfolio](https://moesiomarcelino.dev)
+- [GitHub](https://github.com/MoesioMarcelino)
+- [Linkedin](https://br.linkedin.com/in/mo%C3%A9sio-marcelino-2348a5152)
+- [Instagram](https://www.instagram.com/moesiomarcelino/)
+- [Whatsapp](https://wa.me/5588997129443?text=Ol%C3%A1,%20Mo%C3%A9sio!%20)

@@ -63,7 +63,7 @@ describe('CardStar Component', () => {
     const stars = [
       {
         id: 123456,
-        like: false,
+        like: true,
         user: 'MoesioMarcelino',
       },
     ];
