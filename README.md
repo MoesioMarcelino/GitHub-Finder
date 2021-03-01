@@ -85,6 +85,25 @@
 - [x] A screen like this will appear:
   <img src="https://user-images.githubusercontent.com/37598129/109436711-94807500-79ff-11eb-83cd-5f904fde0f99.png" width="100%" />
 
+## User histories
+- [x] The user will be able to search for a Github user using the nickname
+- [x] The user will be able to search for a Github user using the nickname
+- [x] The user will be able to navigate inside the searched profile
+- [x] The user will be able to enjoy a repository
+- [x] The user will be able to view the location of the user's city that was searched for
+- [x] If the user does not have a defined city, display Brazil as the default location
+- [x] The user will not be able to search without filling in the nickname field
+- [x] The system will return a notification for a user not found
+- [x] The system will always return a welcome notification when making the first access
+- [x] The system will return a loading notification when the user performs a search
+- [x] The system will return a success notification when it finds a user
+- [x] The data fetched and likes data will be stored in localStorage
+- [x] The user can click on the marker that will display a pop-up with the name of the searched user and his / her location
+
+## Prototype
+You can access the prototype [here](https://www.figma.com/file/zSpyfjqhteDcYBsfHxdjoh/GitHub-Finder?node-id=0:1)
+
+  
 ## Contributing / Sugestions
 All sugestions and contributions are welcome! In this case, contact me through the links below
 
