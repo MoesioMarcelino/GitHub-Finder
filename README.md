@@ -6,30 +6,10 @@
 
 <img src="https://user-images.githubusercontent.com/37598129/109435927-b5df6200-79fb-11eb-8a59-29c968ee4ca9.gif" width="100%" />
 
-<br />
-
 <p align="center">GitHub Finder is an application to find users from GitHub. This application displays user informations, your location in map and repositories that user starred</p>
 
-<div style="display: flex; align-items: center; justify-content: center; width: 100%;">
-
-<div style="margin-right: 10px">
-
-[![Linkedin Badge](https://img.shields.io/badge/-MoesioMarcelino-6633cc?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/moesiomarcelino/)](https://www.linkedin.com/in/moesiomarcelino/)
-
-</div>
-<div style="margin-right: 10px">
-
-[![Gmail Badge](https://img.shields.io/badge/-moesiomarcelino1@gmail.com-6633cc?style=flat-square&logo=Gmail&logoColor=white&link=mailto:moesiomarcelino@gmail.com)](mailto:moesiomarcelino1@gmail.com)
-
-</div>
-<div>
-
-[![Whatsapp Badge](https://img.shields.io/badge/-Whatsapp-6633cc?logo=whatsapp&logoColor=white&link=https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)](https://api.whatsapp.com/send/?phone=5588997129443&text=Ol%C3%A1%2C+Mo%C3%A9sio%21+&app_absent=0)
-</div>
-</div>
-
 ## Cloning repository
-- [x] You need have a [github](https://github.com/git-guides/install-git) installed in you computer.
+- [x] You need have a [github](https://github.com/git-guides/install-git) installed in you computer; and
 - [x] After it, clone this repository
   ```js
     git clone https://github.com/MoesioMarcelino/GitHub-Finder
@@ -37,13 +17,13 @@
 
 ## Configuring enviroment
 ### Running app with Mapbox layer
-- [x] You need a key from [mapbox](https://google.com)
+- [x] You need a key from [mapbox](https://google.com) (just create an account there and copy the key);
 - [x] After you get the key and cloning the repository, you should go to in the root folder this project and create the file **.env** with the enviroment variable:
     ```js
       REACT_APP_MAPBOX_TOKEN=YOUR_TOKEN_HERE
     ```
-- [x] You will find an **.env.example** file as a template for the file to be created
-- [x] Ensure that the application is restarted, if you have already started
+- [x] You will find an **.env.example** file as a template for the file to be created; and
+- [x] Ensure that the application is restarted, if you have already started.
 
 ### Running app with layer default from leaflet
 - [x] If you do not want to perform the step-by-step above, navigate to the file: 
@@ -59,8 +39,8 @@
   ```
 
 ## Installing dependencies
-- [x] You will need a node installed your computuder
-- [x] You will need a package management ([npm](https://www.npmjs.com/get-npm) or [yarn](https://classic.yarnpkg.com/en/docs/install))
+- [x] You will need a node installed your computuder;
+- [x] You will need a package management ([npm](https://www.npmjs.com/get-npm) or [yarn](https://classic.yarnpkg.com/en/docs/install)); and
 - [x] Run:
 ```js
   yarn 
@@ -79,9 +59,9 @@
   yarn test:coverage
   // or npm test:coverage
 ```
-- [x] In the root folder, a **coverage** folder will be generated.
-- [x] Navigate to the folder
-- [x] Enter the **lcov-report** folder and run the **index.html** file.
+- [x] In the root folder, a **coverage** folder will be generated;
+- [x] Navigate to the folder;
+- [x] Enter the **lcov-report** folder and run the **index.html** file; and
 - [x] A screen like this will appear:
   <img src="https://user-images.githubusercontent.com/37598129/109436711-94807500-79ff-11eb-83cd-5f904fde0f99.png" width="100%" />
 
