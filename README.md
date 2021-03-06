@@ -1,3 +1,4 @@
+
 <p align="center">
 <img src="./src/assets/logo.svg" />
 </p>
@@ -7,6 +8,9 @@
 <img src="https://user-images.githubusercontent.com/37598129/109435927-b5df6200-79fb-11eb-8a59-29c968ee4ca9.gif" width="100%" />
 
 <p align="center">GitHub Finder is an application to find users from GitHub. This application displays user informations, your location in map and repositories that user starred</p>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/957c983a-ddcc-4d30-9f63-66e7ce157e22/deploy-status)](https://app.netlify.com/sites/githuubfinder/deploys)
+
 
 ## Cloning repository
 - [x] You need have a [github](https://github.com/git-guides/install-git) installed in you computer; and
