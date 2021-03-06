@@ -32,8 +32,8 @@ export const Form = styled.form<FormProps>`
     border-right: 0;
 
     ${(props) =>
-    props.hasError
-      && css`
+      props.hasError &&
+      css`
         border-color: #c53030;
       `}
 
@@ -58,6 +58,27 @@ export const Form = styled.form<FormProps>`
   }
 `;
 
+export const CleanFilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: #d30404;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: filter 0.4s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  svg {
+    font-size: 26px;
+    color: #fff;
+  }
+`;
+
 export const Error = styled.span`
   display: block;
   color: #c53030;
@@ -77,7 +98,7 @@ export const Sections = styled.div<SectionProps>`
 
   display: flex;
   ${(props) =>
-    (props.hasContent
+    props.hasContent
       ? css`
           justify-content: center;
           align-items: flex-start;
@@ -85,7 +106,7 @@ export const Sections = styled.div<SectionProps>`
       : css`
           align-items: center;
           justify-content: center;
-        `)}
+        `}
 `;
 
 export const Section = styled.div<SectionProps>`

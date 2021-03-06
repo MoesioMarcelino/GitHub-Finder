@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
+import { FiTrash2 } from 'react-icons/fi';
 
 import github from '../../services/api/github';
 
@@ -12,6 +13,7 @@ import CardStar, { IStarProps } from '../../components/CardStar';
 import {
   Logo,
   Form,
+  CleanFilterContainer,
   Error,
   Sections,
   Section,
@@ -135,6 +137,17 @@ const Home: React.FC = () => {
     }
   }
 
+  function handleClear() {
+    setNewUser('');
+    setInputError('');
+    setUser({} as IUser);
+    setStars([] as IStar[]);
+    localStorage.removeItem('@GitHubFinder:user');
+    localStorage.removeItem('@GitHubFinder:user-stars');
+    localStorage.removeItem('@GitHubFinder:stars-liked');
+    localStorage.removeItem('@GitHubFinder:coordinates');
+  }
+
   return (
     <>
       <Logo src={logoImg} alt="Logo" />
@@ -146,6 +159,11 @@ const Home: React.FC = () => {
           placeholder="Type user nickname here"
         />
         <button type="submit">Search</button>
+        {user.html_url && (
+          <CleanFilterContainer onClick={handleClear}>
+            <FiTrash2 />
+          </CleanFilterContainer>
+        )}
       </Form>
 
       {inputError && <Error>{inputError}</Error>}

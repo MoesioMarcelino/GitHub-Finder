@@ -4,7 +4,10 @@
     "es2021": true,
     "jest": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -13,7 +16,10 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
   "rules": {
     "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",
@@ -32,22 +38,38 @@
     "no-use-before-define": "off",
     "no-unused-vars": "off",
     "react/jsx-one-expression-per-line": "off",
-    "object-curly-newline": [0, {}],
+    "object-curly-newline": [
+      0,
+      {}
+    ],
     "import/prefer-default-export": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
+    "indent": "off",
+    "no-confusing-arrow": "off"
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   },
   "overrides": [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
       "rules": {
-        "camelcase": ["off"]
+        "camelcase": [
+          "off"
+        ]
       }
     }
   ]
